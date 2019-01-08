@@ -32,11 +32,8 @@ class App extends Component {
   }
 
   componentDidMount(){
-    this.setState({saveClass:'ui primary button'})
     firebase[0].on('value', snapshot => {
       var data = snapshot.val()
-      //var keys = Object.keys(data)
-      //console.log(keys)
       if(data===null)
         this.setState({data:[]})
       else
