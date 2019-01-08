@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import firebase from './firebase';
 
 class Item extends Component {
     state={
@@ -9,7 +10,6 @@ class Item extends Component {
         total:this.props.single.总量,
         sold:this.props.single.售出量,
         delName:'',
-        saveClass:'ui primary button',
         numClass:""
 
     }
@@ -25,8 +25,44 @@ class Item extends Component {
     }
 
     onNameHandler=(event)=>{
-        this.setState({name:event.target.value})
-        this.setState({saveClass:'ui primary button'})
+        let oldName = this.state.name;
+        let newName = event.target.value
+        firebase[0].on('value',snapshot=>{
+            if(snapshot.val()!=null)
+            {
+                try {
+                    var keys = Object.keys(snapshot.val())
+                    for(let i=keys[0];i<snapshot.val().length;i++)
+                    {
+                        let alterable = false;
+                        let times = 0;
+                        snapshot.val().forEach(
+                            (el)=>{
+                                if(el.名称===newName)
+                                {
+                                    times++;
+                                }
+                            }
+                        )
+                        if(times===0)
+                            alterable = true;
+
+                        if(snapshot.val()[i].名称===oldName && oldName!=newName && alterable===true)
+                        {
+                            this.setState({name:newName});
+                            var query = firebase[0].orderByChild("名称").equalTo(oldName);
+                            query.once("child_added", function(snapshot) {
+                                snapshot.ref.update({ 名称: newName })
+                            });
+                        }
+                    }
+                  }
+                  catch(err) {
+                    window.location.reload();
+                  }
+                
+            }
+        })
     }
 
     onTotalHandler=(event)=>{
@@ -37,7 +73,6 @@ class Item extends Component {
             this.setState({total:event.target.value})
             let numChange = this.state.total-this.state.onTheWay;
             this.setState({num:numChange})
-            this.setState({saveClass:'ui primary button'})
             if(this.state.num===0)
             {
                 this.setState({numClass:"ui red tag label"})
@@ -45,17 +80,24 @@ class Item extends Component {
             else{
                 this.setState({numClass:"ui teal tag label"})
             }
+            this.props.onSave(
+                this.state.name,
+                numChange,
+                onItsWay,
+                event.target.value,
+                this.state.sold
+            );
         }
     }
 
     onOnTheWayHandler=(event)=>{
         let onTheWayChange = event.target.value - this.state.onTheWay;
         let onItsWay = this.state.onTheWay+onTheWayChange;
+        let numChange = this.state.total-onItsWay
         if(onItsWay>=0 && onItsWay<this.state.total)
         {
             this.setState({onTheWay:onItsWay})
-            this.setState({num:this.state.total-onItsWay})
-            this.setState({saveClass:'ui primary button'})
+            this.setState({num:numChange})
             if(this.state.num===0)
             {
                 this.setState({numClass:"ui red tag label"})
@@ -63,6 +105,13 @@ class Item extends Component {
             else{
                 this.setState({numClass:"ui teal tag label"})
             }
+            this.props.onSave(
+                this.state.name,
+                numChange,
+                onItsWay,
+                this.state.total,
+                this.state.sold
+            );
         }
     }
 
@@ -76,7 +125,6 @@ class Item extends Component {
                 this.setState({num:minus})
                 this.setState({total:total})
                 this.setState({sold:sold})
-                this.setState({saveClass:'ui primary button'})
                 if(minus===0)
                 {
                     this.setState({numClass:"ui red tag label"})
@@ -84,6 +132,13 @@ class Item extends Component {
                 else{
                     this.setState({numClass:"ui teal tag label"})
                 }
+                this.props.onSave(
+                    this.state.name,
+                    minus,
+                    this.state.onTheWay,
+                    total,
+                    sold
+                )
             }
         }
     }
@@ -98,14 +153,20 @@ class Item extends Component {
                 this.setState({num:minus})
                 this.setState({total:total})
                 this.setState({sold:sold})
-                this.setState({saveClass:'ui primary button'})
-                if(this.state.num===0)
+                if(minus===0)
                 {
                     this.setState({numClass:"ui red tag label"})
                 }
                 else{
                     this.setState({numClass:"ui teal tag label"})
                 }
+                this.props.onSave(
+                    this.state.name,
+                    minus,
+                    this.state.onTheWay,
+                    total,
+                    sold
+                );
             }
         }
     }
@@ -116,7 +177,6 @@ class Item extends Component {
         {
             this.setState({onTheWay: plusOne})
             this.setState({num:this.state.num-=1})
-            this.setState({saveClass:'ui primary button'})
             if(this.state.num===0)
             {
                 this.setState({numClass:"ui red tag label"})
@@ -124,6 +184,7 @@ class Item extends Component {
             else{
                 this.setState({numClass:"ui teal tag label"})
             }
+            this.autoOnSave();
         }
     }
 
@@ -133,7 +194,6 @@ class Item extends Component {
         {
             this.setState({onTheWay: minusOne})
             this.setState({num:this.state.num+=1})
-            this.setState({saveClass:'ui primary button'})
             if(this.state.num===0)
             {
                 this.setState({numClass:"ui red tag label"})
@@ -141,13 +201,20 @@ class Item extends Component {
             else{
                 this.setState({numClass:"ui teal tag label"})
             }
+            this.props.onSave(
+                this.state.name,
+                this.state.num,
+                minusOne,
+                this.state.total,
+                this.state.sold
+            )
         }
     }
 
     onTotalPlusHandler=()=>{
         this.setState({total:this.state.total+=1})
         this.setState({onTheWay:this.state.onTheWay+=1})
-        this.setState({saveClass:'ui primary button'})
+        this.autoOnSave();
     }
 
     onTotalMinusHandler=()=>{
@@ -157,7 +224,6 @@ class Item extends Component {
         {
             this.setState({total:minusOne})
             this.setState({onTheWay:onItsWay})
-            this.setState({saveClass:'ui primary button'})
             if(this.state.num===0)
             {
                 this.setState({numClass:"ui red tag label"})
@@ -165,11 +231,28 @@ class Item extends Component {
             else{
                 this.setState({numClass:"ui teal tag label"})
             }
+            this.props.onSave(
+                this.state.name,
+                this.state.num,
+                onItsWay,
+                minusOne,
+                this.state.sold
+            )
         }
     }
 
     onDelNameHandler=(event)=>{
         this.setState({delName:event.target.value})
+    }
+
+    autoOnSave(){
+        this.props.onSave(
+            this.state.name,
+            this.state.num,
+            this.state.onTheWay,
+            this.state.total,
+            this.state.sold
+        )
     }
 
     render(){
@@ -201,18 +284,6 @@ class Item extends Component {
                 </td>
                 <td>
                     <a className="ui teal tag label">{this.state.sold}</a>
-                </td>
-                <td>
-                    <button className={this.state.saveClass} style={{margin:'5px'}} onClick={()=>{
-                        this.setState({saveClass:'ui button'})
-                        this.props.onSave(
-                        this.state.id,
-                        this.state.name,
-                        this.state.num,
-                        this.state.onTheWay,
-                        this.state.total,
-                        this.state.sold
-                    )}}><i className="save icon"></i>Save</button>
                 </td>
                 <td>
                     <button className="ui red basic button" style={{margin:'5px'}} onClick={()=>this.props.onDelete(this.state.name)}><i className="trash icon"></i>Del</button>

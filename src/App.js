@@ -41,11 +41,10 @@ class App extends Component {
         this.setState({data:[]})
       else
         this.setState({data:data})
-      console.log(this.state.data)
     });
   }
 
-  onSaveHandler=(index,name,num,onTheWay,total,sold)=>{
+  onSaveHandler=(name,num,onTheWay,total,sold)=>{
     const item = {
       名称:name,
       现货数量:num,

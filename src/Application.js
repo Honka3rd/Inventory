@@ -18,8 +18,8 @@ class Application extends Component{
             </div>)
         }
         return(
-        <h2 class="ui header" style={{paddingTop:'20px'}}>
-            <div class="content">{this.props.errorMsg}</div>
+        <h2 className="ui header" style={{paddingTop:'20px'}}>
+            <div className="content">{this.props.errorMsg}</div>
         </h2>)
     }
     render(){

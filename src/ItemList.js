@@ -113,7 +113,6 @@ class ItemList extends Component{
                             <th><i className="shipping fast icon"></i>在途数量</th>
                             <th><i className="warehouse icon"></i>货物总量</th>
                             <th><i className="clipboard check icon"></i>售出量</th>
-                            <th><i className="sync alternate icon"></i>更新数据</th>
                             <th><i className="eraser icon"></i>删除数据</th>
                         </tr>
                     </thead>
