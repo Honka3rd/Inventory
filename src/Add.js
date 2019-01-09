@@ -23,7 +23,7 @@ class Add extends Component{
                         style={{margin:'5px'}}
                         onClick={()=>this.props.onPush(this.state.name)}
                     ><i className="plus square outline icon"></i>
-                        添加
+                        添加新产品
                     </button>
                 </div>)
         }

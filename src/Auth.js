@@ -13,7 +13,9 @@ class Auth extends Component{
                     <input value={this.props.password} onChange={this.props.onChange} type="password" placeholder="请输入密码"/>
                 </div>
             </form>
-            <Password/>
+            <div style={{position:'absolute',right:'0',top:'0'}}>
+                <Password/>
+            </div>
             <Application 
                 onPass={this.props.onPass} 
                 errorMsg={this.props.errMsg} 

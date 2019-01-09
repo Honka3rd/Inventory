@@ -3,6 +3,8 @@ import Item from './Item'
 import Add from './Add'
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css'
+import WriteCSV from './WriteCSV'
+import ReadCSV from './ReadCSV'
 
 class ItemList extends Component{
     state = {
@@ -105,6 +107,7 @@ class ItemList extends Component{
     render(){
         return(
             <div>
+                <h3>Online work space:</h3>
                 <table className="ui celled table">
                     <thead>
                         <tr>
@@ -120,7 +123,21 @@ class ItemList extends Component{
                         {this.state.rendered}
                     </tbody>
                 </table>
-                <Add onPush={this.onAddHandler} err={this.state.err}/>
+
+                <form className="ui form">
+                    <div className="field">
+                        <Add onPush={this.onAddHandler} err={this.state.err}/>
+                        <br/>
+                        <h3>Before going offline:</h3>
+                        <br/>
+                        <i class="download icon"></i>下载csv文件:
+                        <br/>
+                        <WriteCSV/>
+                        <br/>
+                        <br/>
+                        <i class="upload icon"></i>上传csv文件:<ReadCSV/>
+                    </div>
+                </form>
             </div>
             )
     }
