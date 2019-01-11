@@ -130,23 +130,22 @@ class ItemList extends Component{
                     </div>
                 </form>
                 <div class="ui grid" style={{marginTop:'20px'}}>
-                    <div class="four wide column">
+                    <div class="seven wide column">
                         <h3>Before going offline:</h3>
-                        <br/>
                         <i class="download icon"></i>下载Excel表格:
-                        <br/>
                         <WriteCSV/>
                     </div>
-                    <div class="four wide column">
+                    <div class="seven wide column">
                         <h3>Once you back online:</h3>
-                        <br/>
                         <i class="upload icon"></i>上传Excel表格:<ReadCSV/>
                     </div>
+                    <div class="two wide column">
+                        <button className="ui button" style={{marginTop:'20px',marginBottom:'10px'}} onClick={()=>{window.location.reload()}}>
+                            <i class="sign out alternate icon"></i>
+                            登出
+                        </button>
+                    </div>
                 </div>
-                <button className="ui button" style={{marginTop:'20px',marginBottom:'10px'}} onClick={()=>{window.location.reload()}}>
-                    <i class="sign out alternate icon"></i>
-                    登出
-                </button>
             </div>
             )
     }
