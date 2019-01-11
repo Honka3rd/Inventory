@@ -133,14 +133,14 @@ class ItemList extends Component{
                     <div class="four wide column">
                         <h3>Before going offline:</h3>
                         <br/>
-                        <i class="download icon"></i>下载csv文件:
+                        <i class="download icon"></i>下载Excel表格:
                         <br/>
                         <WriteCSV/>
                     </div>
                     <div class="four wide column">
                         <h3>Once you back online:</h3>
                         <br/>
-                        <i class="upload icon"></i>上传csv文件:<ReadCSV/>
+                        <i class="upload icon"></i>上传Excel表格:<ReadCSV/>
                     </div>
                 </div>
                 <button className="ui button" style={{marginTop:'20px',marginBottom:'10px'}} onClick={()=>{window.location.reload()}}>

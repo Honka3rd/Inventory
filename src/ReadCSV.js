@@ -36,6 +36,9 @@ class ReadCSV extends Component{
                     window.location.reload();
                 }
             }
+            else{
+                window.alert('数据表结构有误，请提交正确的数据表')
+            }
         }
         catch(err){
             window.location.reload();

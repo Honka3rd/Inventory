@@ -8,9 +8,9 @@ class Auth extends Component{
         <div>
             <form onSubmit={this.props.onSubmit} id='auth' className="ui form" style={{paddingTop:'20px'}}>
                 <div className="field">
-                    <h1 className="ui dividing header"><i className="desktop icon"></i>please enter your password(Press Enter key to submit)</h1>
+                    <h1 className="ui dividing header"><i className="desktop icon"></i>please enter your password</h1>
                     <br></br>
-                    <input value={this.props.password} onChange={this.props.onChange} type="password" placeholder="请输入密码"/>
+                    <input value={this.props.password} onChange={this.props.onChange} type="password" placeholder="请输入密码(Press Enter key to submit)"/>
                 </div>
             </form>
             <div style={{position:'absolute',right:'0',top:'0'}}>
