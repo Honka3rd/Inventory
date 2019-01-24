@@ -5,6 +5,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css'
 import WriteCSV from './WriteCSV'
 import ReadCSV from './ReadCSV'
+import firebase from './firebase'
 
 class ItemList extends Component{
     state = {
@@ -24,7 +25,7 @@ class ItemList extends Component{
                     renderedList = this.state.rendered;
                     this.props.onDelete(name);
                     renderedList.forEach(function(el){
-                        if(name===el.props.single.名称)
+                        if(name===el.props.single.名称 && renderedList.length>1)
                         {
                             const idx = renderedList.indexOf(el);
                             renderedList.splice(idx,1);
@@ -87,7 +88,7 @@ class ItemList extends Component{
     {
         let list = []
         list = this.props.data;
-        if(list.length>0){
+        if(list!=null || list!=undefined){
             let renderedList = this.props.data.map((item,index) =>{
                 return (
                 <Item 
@@ -101,6 +102,9 @@ class ItemList extends Component{
             })
             console.log(renderedList)
             this.setState({rendered:renderedList})
+        }
+        else{
+            firebase[0] = firebase.database().ref().child('list').child('data')
         }
     }
 

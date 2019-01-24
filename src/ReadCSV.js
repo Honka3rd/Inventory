@@ -22,7 +22,12 @@ class ReadCSV extends Component{
                 let arr = this.state.imported;
                 for(let i=1;i<data.length-1;i++)
                 {
-                    try{
+                    let fst = [];
+                    fst = [data[i][1],data[i][2],data[i][3],data[i][4]]
+                    if(fst.some((el)=>{
+                        return isNaN(parseInt(el))
+                    }) === false)
+                    {
                         if(parseInt(data[i][2])+parseInt(data[i][4])===parseInt(data[i][3])){
                             let item={
                                 名称:data[i][0],
@@ -36,12 +41,11 @@ class ReadCSV extends Component{
                         }
                         else{
                             this.setState({push:false})
-                            window.alert(`第${i}行计算错误`)
-                            console.log(data[i][2]+data[i][4])
+                            window.alert(`第${i+1}行计算错误`)
                         }
                     }
-                    catch(err){
-                        window.alert(`第${i}行有非数字`)
+                    else{
+                        window.alert(`第${i+1}行有非数字`)
                         this.setState({push:false})
                     }
                 }
@@ -51,6 +55,7 @@ class ReadCSV extends Component{
                     this.setState({imported:arr})
                     firebase[0].set(arr)
                     window.location.reload();
+                    window.alert('表格读取完成')
                 }
             }
             else{

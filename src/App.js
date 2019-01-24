@@ -84,7 +84,7 @@ class App extends Component {
     let list = []
     const rootRef = firebase[0];
     list = this.state.data;
-    if(list.length>0){
+    if(list.length>1){
       list.forEach(function(el){
         if(el.名称===name && list.length>=1)
         {
@@ -99,6 +99,9 @@ class App extends Component {
       })
       this.setState({data:list})
       console.log(this.state.data)
+    }
+    else{
+      window.alert('仅剩下最后一个，请直接在上面修改');
     }
   }
   
