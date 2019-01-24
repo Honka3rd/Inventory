@@ -3,7 +3,10 @@ import CSVReader from "react-csv-reader";
 import firebase from './firebase'
 
 class ReadCSV extends Component{
-    state={imported:[]}
+    state={
+        imported:[],
+        push:false
+    }
     handleForce = data => {
         try{
             console.log(data);
@@ -17,19 +20,33 @@ class ReadCSV extends Component{
                 )
             {
                 let arr = this.state.imported;
-                for(let i=1;i<data.length;i++)
+                for(let i=1;i<data.length-1;i++)
                 {
-                    let item={
-                        名称:data[i][0],
-                        售出量:data[i][1],
-                        在途数量:data[i][2],
-                        总量:data[i][3],
-                        现货数量:data[i][4]
+                    try{
+                        if(parseInt(data[i][2])+parseInt(data[i][4])===parseInt(data[i][3])){
+                            let item={
+                                名称:data[i][0],
+                                售出量:data[i][1],
+                                在途数量:data[i][2],
+                                总量:data[i][3],
+                                现货数量:data[i][4]
+                            }
+                            arr.push(item);
+                            this.setState({push:true})
+                        }
+                        else{
+                            this.setState({push:false})
+                            window.alert(`第${i}行计算错误`)
+                            console.log(data[i][2]+data[i][4])
+                        }
                     }
-                    arr.push(item);
+                    catch(err){
+                        window.alert(`第${i}行有非数字`)
+                        this.setState({push:false})
+                    }
                 }
                 console.log(arr)
-                if(arr.length!=0){
+                if(arr.length!=0 && this.state.push===true){
                     firebase[0].set('');
                     this.setState({imported:arr})
                     firebase[0].set(arr)
@@ -41,7 +58,7 @@ class ReadCSV extends Component{
             }
         }
         catch(err){
-            window.location.reload();
+            //window.location.reload();
         }
       };
 

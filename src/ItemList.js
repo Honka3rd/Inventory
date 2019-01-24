@@ -129,19 +129,19 @@ class ItemList extends Component{
                         <Add onPush={this.onAddHandler} err={this.state.err}/>
                     </div>
                 </form>
-                <div class="ui grid" style={{marginTop:'20px'}}>
-                    <div class="seven wide column">
+                <div className="ui grid" style={{marginTop:'20px'}}>
+                    <div className="seven wide column">
                         <h3>Before going offline:</h3>
-                        <i class="download icon"></i>下载Excel表格:
+                        <i className="download icon"></i>下载Excel表格:
                         <WriteCSV/>
                     </div>
-                    <div class="seven wide column">
+                    <div className="seven wide column">
                         <h3>Once you back online:</h3>
-                        <i class="upload icon"></i>上传Excel表格:<ReadCSV/>
+                        <i className="upload icon"></i>上传Excel表格:<ReadCSV/>
                     </div>
-                    <div class="two wide column">
+                    <div className="two wide column">
                         <button className="ui button" style={{marginTop:'20px',marginBottom:'10px'}} onClick={()=>{window.location.reload()}}>
-                            <i class="sign out alternate icon"></i>
+                            <i className="sign out alternate icon"></i>
                             登出
                         </button>
                     </div>
