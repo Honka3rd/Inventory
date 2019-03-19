@@ -84,9 +84,9 @@ class App extends Component {
     let list = []
     const rootRef = firebase[0];
     list = this.state.data;
-    if(list.length>2){
+    if(list.length>1){
       list.forEach(function(el){
-        if(el.名称===name && list.length>=1)
+        if(el.名称===name)
         {
           list.splice(list.indexOf(el),1)
           var query = rootRef.orderByChild("名称").equalTo(name);
