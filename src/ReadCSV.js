@@ -50,7 +50,7 @@ class ReadCSV extends Component{
                     }
                 }
                 console.log(arr)
-                if(arr.length!=0 && this.state.push===true){
+                if(arr.length!==0 && this.state.push===true){
                     firebase[0].set('');
                     this.setState({imported:arr})
                     firebase[0].set(arr)

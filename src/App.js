@@ -84,7 +84,7 @@ class App extends Component {
     let list = []
     const rootRef = firebase[0];
     list = this.state.data;
-    if(list.length>1){
+    if(list.length>2){
       list.forEach(function(el){
         if(el.名称===name && list.length>=1)
         {

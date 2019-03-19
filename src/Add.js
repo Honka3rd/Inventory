@@ -15,7 +15,7 @@ class Add extends Component{
                     <div className="ui input">
                         <input 
                             onChange={this.onChangeHandler}
-                            placeholder="请输入产品名称(回车键提交)"
+                            placeholder="请输入产品名称"
                         />
                     </div>
                     <button 

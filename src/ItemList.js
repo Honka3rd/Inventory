@@ -88,7 +88,7 @@ class ItemList extends Component{
     {
         let list = []
         list = this.props.data;
-        if(list!=null || list!=undefined){
+        if(list){
             let renderedList = this.props.data.map((item,index) =>{
                 return (
                 <Item 
@@ -128,7 +128,7 @@ class ItemList extends Component{
                     </tbody>
                 </table>
 
-                <form className="ui form">
+                <form className="ui form" onSubmit={(event)=>{event.preventDefault()}}>
                     <div className="field">
                         <Add onPush={this.onAddHandler} err={this.state.err}/>
                     </div>

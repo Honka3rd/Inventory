@@ -32,7 +32,7 @@ class Password extends Component{
             console.log(typeof this.state.pwd)
             console.log(typeof org)
             console.log(typeof scd)
-            if(this.state.pwd==org && org===scd)
+            if(this.state.pwd===org && org===scd)
             {
                 this.setState({newPwdRd:<div className="ui input">
                     <input style={{marginRight:'10px'}} id='new' type="password" placeholder='新密码'/>

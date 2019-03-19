@@ -47,7 +47,7 @@ class Item extends Component {
                         if(times===0)
                             alterable = true;
 
-                        if(snapshot.val()[i].名称===oldName && oldName!=newName && alterable===true)
+                        if(snapshot.val()[i].名称===oldName && oldName!==newName && alterable===true)
                         {
                             this.setState({name:newName});
                             var query = firebase[0].orderByChild("名称").equalTo(oldName);
@@ -176,7 +176,8 @@ class Item extends Component {
         if(plusOne<=this.state.total)
         {
             this.setState({onTheWay: plusOne})
-            this.setState({num:this.state.num-=1})
+            let num = this.state.num - 1;
+            this.setState({num:num})
             if(this.state.num===0)
             {
                 this.setState({numClass:"ui red tag label"})
@@ -193,7 +194,8 @@ class Item extends Component {
         if(minusOne>=0)
         {
             this.setState({onTheWay: minusOne})
-            this.setState({num:this.state.num+=1})
+            let num = this.state.num + 1;
+            this.setState({num:num})
             if(this.state.num===0)
             {
                 this.setState({numClass:"ui red tag label"})
@@ -212,8 +214,10 @@ class Item extends Component {
     }
 
     onTotalPlusHandler=()=>{
-        this.setState({total:this.state.total+=1})
-        this.setState({onTheWay:this.state.onTheWay+=1})
+        let num = this.state.total+1
+        this.setState({total:num})
+        let onTheWay = this.state.onTheWay+1
+        this.setState({onTheWay:onTheWay})
         this.autoOnSave();
     }
 
